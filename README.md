@@ -25,7 +25,7 @@ Containerization: The pipeline is containerized using Docker to ensure portabili
 Steps to Run the Pipeline
 Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/thachinaboni/Case_Breweries
 ```
 
 ```bash
