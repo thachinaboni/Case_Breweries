@@ -52,8 +52,8 @@ For monitoring and alerting, the pipeline can be integrated with tools such as A
 Full containerization with Docker.
 
 ## Design Considerations
-Partitioning: The data is partitioned by state in the Silver Layer to optimize read and write operations.
-Error Handling: The pipeline includes error handling for API requests and data processing steps to ensure reliability.
+- Partitioning: The data is partitioned by state in the Silver Layer to optimize read and write operations.
+- Error Handling: The pipeline includes error handling for API requests and data processing steps to ensure reliability.
 
 ## Future Enhancements
 - Scalability: The pipeline can be extended to handle larger datasets by scaling the Spark jobs.
