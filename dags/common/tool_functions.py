@@ -1,20 +1,18 @@
 def round_columns(df, columns, precision):
     """
-    Função para arredondar colunas de um DataFrame
+    Função para arredondar colunas de um DataFrame pandas
     Parâmetros:
-    df: DataFrame a ser arredondado
+    df: DataFrame pandas a ser arredondado
     columns: Lista de colunas a serem arredondadas
     precision: int - Número de casas decimais para arredondamento
     """
-    from pyspark.sql import functions as F
+    import pandas as pd
 
     for column in columns:
-        df = df.withColumn(column, F.regexp_replace(F.col(column), ',', '.'))
-        df = df.withColumn(column, F.regexp_replace(F.col(column), ' ', ''))
-        
-        df = df.withColumn(column, F.col(column).cast("double"))
-        
-        df = df.withColumn(column, F.round(F.col(column), precision))
+        df[column] = df[column].astype(str).str.replace(',', '.', regex=False)
+        df[column] = df[column].str.replace(' ', '', regex=False)
+        df[column] = pd.to_numeric(df[column], errors='coerce')
+        df[column] = df[column].round(precision)
     return df
 
 def fill_blank_columns(df, columns):
@@ -25,8 +23,8 @@ def fill_blank_columns(df, columns):
     df: Dataframe a ser utilizado
     columns: colunas a receberem a substituição
     """
-    from pyspark.sql import functions as F
-
+    import pandas as pd
+    
     for column in columns:
-        df = df.withColumn(column, F.when(F.col(column).isNull(), F.lit("Unknown")).otherwise(F.col(column)))
+        df[column] = df[column].replace(['', ' '], None).fillna('Unknown')
     return df
